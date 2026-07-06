@@ -1,0 +1,142 @@
+@layer theme, base, antd, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+/*
+禁用 Tailwind Preflight，避免与 Ant Design 样式冲突
+@see https://tailwindcss.com/docs/preflight#disabling-preflight
+*/
+/* @import "tailwindcss/preflight.css" layer(base); */
+@import "tailwindcss/utilities.css" layer(utilities);
+
+
+/* @see https://tailwindcss.com/docs/dark-mode#toggling-dark-mode-manually */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* @see https://tailwindcss.com/docs/theme */
+@theme {
+	/* Use ant design breakpoints */
+	/* @see https://ant.design/components/layout-cn#breakpoint-width */
+	/* @see https://tailwindcss.com/docs/responsive-desig */
+	--breakpoint-xs: 480px;
+	--breakpoint-sm: 576px;
+	--breakpoint-md: 768px;
+	--breakpoint-lg: 992px;
+	--breakpoint-xl: 1200px;
+	--breakpoint-2xl: 1600px;
+
+	/*
+	 * Design tokens exposed as first-class Tailwind utilities (non-colliding `app-` prefix).
+	 * Generates: text-app-{xs..5xl}, rounded-app-{none..full}, shadow-app-{sm..xl}.
+	 * Values reference the --app-* CSS vars from tokens.css (single source of truth),
+	 * so updating tokens.css updates both raw var() consumers and these utilities.
+	 * Default Tailwind scales (text-base, rounded-md, shadow-lg …) are intentionally untouched.
+	 */
+	--text-app-xs: var(--app-text-xs);
+	--text-app-sm: var(--app-text-sm);
+	--text-app-base: var(--app-text-base);
+	--text-app-md: var(--app-text-md);
+	--text-app-lg: var(--app-text-lg);
+	--text-app-xl: var(--app-text-xl);
+	--text-app-2xl: var(--app-text-2xl);
+	--text-app-3xl: var(--app-text-3xl);
+	--text-app-4xl: var(--app-text-4xl);
+	--text-app-5xl: var(--app-text-5xl);
+
+	--radius-app-none: var(--app-radius-none);
+	--radius-app-xs: var(--app-radius-xs);
+	--radius-app-sm: var(--app-radius-sm);
+	--radius-app-base: var(--app-radius-base);
+	--radius-app-md: var(--app-radius-md);
+	--radius-app-lg: var(--app-radius-lg);
+	--radius-app-xl: var(--app-radius-xl);
+	--radius-app-full: var(--app-radius-full);
+
+	--shadow-app-sm: var(--app-shadow-sm);
+	--shadow-app-base: var(--app-shadow-base);
+	--shadow-app-md: var(--app-shadow-md);
+	--shadow-app-lg: var(--app-shadow-lg);
+	--shadow-app-xl: var(--app-shadow-xl);
+
+	/* @see https://tailwindcss.com/docs/theme#defining-animation-keyframes */
+	--animate-wiggle: wiggle 1s both;
+	--animate-bounce-in-down-out-up: bounce-in-down-out-up 4s ease-in-out 0ms infinite;
+
+	@keyframes wiggle {
+
+		0%,
+		100% {
+			transform-origin: top;
+		}
+
+		15% {
+			transform: rotateZ(10deg);
+		}
+
+		30% {
+			transform: rotateZ(-10deg);
+		}
+
+		45% {
+			transform: rotateZ(5deg);
+		}
+
+		60% {
+			transform: rotateZ(-5deg);
+		}
+
+		75% {
+			transform: rotateZ(2deg);
+		}
+	}
+
+	@keyframes bounce-in-down-out-up {
+		0% {
+			transform: translateY(0);
+		}
+
+		50% {
+			transform: translateY(-20px);
+		}
+
+		100% {
+			transform: translateY(0);
+		}
+	}
+}
+
+/* @see https://tailwindcss.com/docs/adding-custom-styles#adding-custom-variants */
+/*
+添加 lang 伪类选择器
+
+@example
+```
+en-US:text-white
+not-en-US:text-black
+```
+*/
+@custom-variant en-US {
+  &:where(:lang(en-US)) {
+    @slot;
+  }
+}
+
+@custom-variant zh-CN {
+  &:where(:lang(zh-CN)) {
+    @slot;
+  }
+}
+
+/* 为每种语言创建不匹配变体 */
+@custom-variant not-en-US {
+  &:where(:not(:lang(en-US))) {
+    @slot;
+  }
+}
+
+@custom-variant not-zh-CN {
+  &:where(:not(:lang(zh-CN))) {
+    @slot;
+  }
+}
+
+/* 为 Tailwind 添加自定义插件 */
+@plugin "../plugins/tailwind.ts"

@@ -1,0 +1,16 @@
+/* BasicTable 滚动条样式 (P2-12: 从 react-jss 迁移到普通 CSS).
+ *
+ * react-jss 在本项目的用法几乎全是「覆盖 antd 内部元素」(伪元素/!important/token),
+ * 这类选择器 Tailwind 工具类无法表达, 故退役 react-jss 的正确模式是迁到普通 CSS,
+ * 主题色用 antd CSS 变量 var(--ant-*) 或 .dark 类. Tailwind 仍负责通用布局/间距.
+ *
+ * 原 styles.ts: createUseStyles 生成 .basicTable-X .ant-table .ant-table-container
+ * .ant-table-content/body { scrollbar-width/color/gutter }, isDark 切色.
+ * 选择器挂在 className (与原 JSS classes.basicTable 同位置), 保证等价.
+ */
+.basic-table-scroll .ant-table .ant-table-container .ant-table-content,
+.basic-table-scroll .ant-table .ant-table-container .ant-table-body {
+	scrollbar-width: thin;
+	scrollbar-color: var(--ant-color-border-secondary) transparent;
+	scrollbar-gutter: stable;
+}

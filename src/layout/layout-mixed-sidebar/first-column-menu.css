@@ -1,0 +1,19 @@
+/* first-column-menu (mixed-sidebar) 样式 (P2-12: react-jss → 普通 CSS).
+ * 原 createUseStyles({token}) .menu: 覆盖 antd Menu item 布局 (gap/height/flex) +
+ * title-content (lineHeight/margin/fontSize). 其中 gap=token.sizeXS, fontSize=token.fontSizeIcon
+ * 是 antd 设计 token, 未被 cssVar 暴露为 CSS 变量, 故用「token → 根元素 inline CSS 变量 → CSS 引用」桥接.
+ */
+.first-column-menu .ant-menu-item {
+	gap: var(--first-col-gap);
+	height: 60px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.first-column-menu .ant-menu-item .ant-menu-title-content {
+	line-height: initial;
+	margin: 0px !important;
+	font-size: var(--first-col-icon-size);
+}

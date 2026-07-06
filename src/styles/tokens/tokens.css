@@ -1,0 +1,74 @@
+/**
+ * Design tokens as CSS custom properties on :root.
+ *
+ * Imported once via src/styles/index.css. Consumers use `var(--app-<scale>-<step>)`
+ * (e.g. `var(--app-space-4)`, `var(--app-text-base)`, `var(--app-radius-md)`,
+ * `var(--app-shadow-lg)`) in plain CSS or Tailwind arbitrary values
+ * (e.g. `p-[var(--app-space-4)]`).
+ *
+ * Mirrors the TS constants in tokens/*.ts — keep both in sync.
+ */
+:root {
+	/* spacing */
+	--app-space-xs: 4px;
+	--app-space-sm: 8px;
+	--app-space-md: 12px;
+	--app-space-base: 16px;
+	--app-space-lg: 20px;
+	--app-space-xl: 24px;
+	--app-space-2xl: 32px;
+	--app-space-3xl: 40px;
+	--app-space-4xl: 48px;
+	--app-space-5xl: 64px;
+
+	/* font-size */
+	--app-text-xs: 12px;
+	--app-text-sm: 13px;
+	--app-text-base: 14px;
+	--app-text-md: 16px;
+	--app-text-lg: 18px;
+	--app-text-xl: 20px;
+	--app-text-2xl: 24px;
+	--app-text-3xl: 30px;
+	--app-text-4xl: 36px;
+	--app-text-5xl: 48px;
+
+	/* line-height */
+	--app-leading-tight: 1.2;
+	--app-leading-snug: 1.4;
+	--app-leading-base: 1.5;
+	--app-leading-relaxed: 1.7;
+	--app-leading-loose: 2;
+
+	/* font-weight */
+	--app-weight-normal: 400;
+	--app-weight-medium: 500;
+	--app-weight-semibold: 600;
+	--app-weight-bold: 700;
+
+	/* radius */
+	--app-radius-none: 0;
+	--app-radius-xs: 2px;
+	--app-radius-sm: 4px;
+	--app-radius-base: 6px;
+	--app-radius-md: 8px;
+	--app-radius-lg: 12px;
+	--app-radius-xl: 16px;
+	--app-radius-full: 9999px;
+
+	/* shadow (light) */
+	--app-shadow-sm: 0 1px 2px 0 rgba(0,0,0,0.05);
+	--app-shadow-base: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px -1px rgba(0,0,0,0.1);
+	--app-shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+	--app-shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
+	--app-shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1);
+}
+
+/* Dark-mode shadow overrides (stronger contrast on dark surfaces). */
+.dark {
+	--app-shadow-sm: 0 1px 2px 0 rgba(0,0,0,0.3);
+	--app-shadow-base: 0 1px 3px 0 rgba(0,0,0,0.4), 0 1px 2px -1px rgba(0,0,0,0.4);
+	--app-shadow-md: 0 4px 6px -1px rgba(0,0,0,0.4), 0 2px 4px -2px rgba(0,0,0,0.4);
+	--app-shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.4), 0 4px 6px -4px rgba(0,0,0,0.4);
+	--app-shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.4), 0 8px 10px -6px rgba(0,0,0,0.4);
+}

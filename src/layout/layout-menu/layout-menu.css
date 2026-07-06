@@ -1,0 +1,7 @@
+/* layout-menu 折叠态选中背景 (P2-12: react-jss → 普通 CSS).
+ * 原 style.ts menuBackgroundColor: .ant-menu-submenu-selected .ant-menu-submenu-title
+ * background-color: var(--ant-menu-item-selected-bg). 组件级 CSS 变量, Menu 作用域内可解析.
+ */
+.menu-bg-collapsed .ant-menu-submenu-selected .ant-menu-submenu-title {
+	background-color: var(--ant-menu-item-selected-bg);
+}

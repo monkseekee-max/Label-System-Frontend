@@ -1,0 +1,14 @@
+/* layout-mobile-menu 抽屉样式 (P2-12: react-jss → 普通 CSS).
+ * 原 createUseStyles drawerStyles: drawer body 去内边距 + ul 顶部留白, header 隐藏. 无 token.
+ */
+.mobile-menu-drawer .ant-drawer-body {
+	padding: 0;
+}
+
+.mobile-menu-drawer .ant-drawer-body > ul {
+	padding-top: 1em;
+}
+
+.mobile-menu-drawer .ant-drawer-header {
+	display: none;
+}

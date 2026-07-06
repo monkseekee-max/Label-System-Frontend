@@ -1,0 +1,153 @@
+/* layout-tabbar 标签页样式 (P2-12: react-jss → 普通 CSS, 最后一个 react-jss 用户).
+ * 6 个变体 (container/reset/brisk/plain/chrome/card) 逐条从 style.ts 翻译;
+ * token.colorXxx → var(--ant-color-xxx) (antd cssVar 暴露的组件级变量, 已验证可用).
+ * chrome 变体的圆角伪元素 (::before/::after + clip-path) 是视觉关键, 选择器逐字保留.
+ */
+
+/* tabsContainer */
+.tabbar-container {
+	background-color: var(--ant-color-bg-container);
+	border-top: 1px solid var(--ant-color-border-secondary);
+	border-bottom: 1px solid var(--ant-color-border-secondary);
+}
+
+/* resetTabs */
+.tabbar-reset .ant-tabs-nav::before {
+	display: none;
+}
+
+.tabbar-reset .ant-tabs-nav {
+	margin: 0;
+}
+
+.tabbar-reset .ant-tabs-nav .ant-tabs-tab {
+	transition: inherit;
+	margin-left: 0px !important;
+	border: none !important;
+	border-radius: 0px !important;
+	padding-top: 0.3em !important;
+	padding-bottom: 0.3em !important;
+}
+
+/* brisk */
+.tabbar-brisk .ant-tabs-nav .ant-tabs-tab {
+	border-right: 1px solid var(--ant-color-border) !important;
+}
+
+.tabbar-brisk .ant-tabs-ink-bar {
+	background-color: var(--ant-color-primary);
+	visibility: visible !important;
+}
+
+/* plain */
+.tabbar-plain .ant-tabs-nav .ant-tabs-tab {
+	border-right: 1px solid var(--ant-color-border) !important;
+}
+
+/* chrome */
+.tabbar-chrome .ant-tabs-nav .ant-tabs-nav-list {
+	gap: 5px;
+}
+
+.tabbar-chrome .ant-tabs-nav .ant-tabs-tab:not(.ant-tabs-tab-active) {
+	background-color: var(--ant-color-bg-container);
+	position: relative;
+	border-radius: 7px !important;
+	padding: 0px 12px !important;
+	margin-top: 3px;
+	margin-bottom: 3px;
+}
+
+.tabbar-chrome .ant-tabs-nav .ant-tabs-tab:not(.ant-tabs-tab-active):hover {
+	background-color: var(--ant-color-border);
+	color: inherit;
+}
+
+.tabbar-chrome .ant-tabs-nav .ant-tabs-tab:not(.ant-tabs-tab-active):hover::before {
+	content: " ";
+	height: 100%;
+	width: 1px;
+	background-color: var(--ant-color-bg-container);
+	left: -3px;
+	position: absolute;
+}
+
+.tabbar-chrome .ant-tabs-nav .ant-tabs-tab:not(.ant-tabs-tab-active):hover::after {
+	display: none;
+}
+
+.tabbar-chrome .ant-tabs-nav .ant-tabs-tab:not(.ant-tabs-tab-active)::after {
+	content: " ";
+	position: absolute;
+	right: -3px;
+	width: 1px;
+	height: 16px;
+	background-color: var(--ant-color-border);
+}
+
+.tabbar-chrome .ant-tabs-nav .ant-tabs-tab-active {
+	margin-top: 3px;
+	padding: 0px 12px 3px !important;
+	background-color: var(--ant-color-primary-bg);
+	border-top-left-radius: 7px !important;
+	border-top-right-radius: 7px !important;
+	position: relative;
+}
+
+.tabbar-chrome .ant-tabs-nav .ant-tabs-tab-active::before {
+	content: " ";
+	position: absolute;
+	left: -7px;
+	bottom: 0;
+	width: 7px;
+	height: 7px;
+	background-color: var(--ant-color-primary-bg);
+	transform: rotate(-90deg);
+	z-index: 1;
+	clip-path: path("M 0 0 A 7 7 0 0 0 7 7 L 0 7 Z");
+}
+
+.tabbar-chrome .ant-tabs-nav .ant-tabs-tab-active > div::before {
+	content: " ";
+	height: 100%;
+	width: 1px;
+	background-color: var(--ant-color-bg-container);
+	left: -3px;
+	position: absolute;
+}
+
+.tabbar-chrome .ant-tabs-nav .ant-tabs-tab-active::after {
+	content: " ";
+	position: absolute;
+	right: -7px;
+	bottom: 0;
+	width: 7px;
+	height: 7px;
+	z-index: 1;
+	background-color: var(--ant-color-primary-bg);
+	clip-path: path("M 0 0 A 7 7 0 0 0 7 7 L 0 7 Z");
+}
+
+/* card */
+.tabbar-card .ant-tabs-nav-list {
+	gap: 5px;
+}
+
+.tabbar-card .ant-tabs-nav .ant-tabs-tab {
+	background-color: var(--ant-color-bg-container);
+	border: 1px solid var(--ant-color-border) !important;
+	position: relative;
+	border-radius: 7px !important;
+	padding: 0px 12px !important;
+	margin-top: 3px;
+	margin-bottom: 3px;
+}
+
+.tabbar-card .ant-tabs-nav .ant-tabs-tab:hover {
+	background-color: var(--ant-color-border);
+	color: inherit;
+}
+
+.tabbar-card .ant-tabs-nav .ant-tabs-tab-active {
+	background-color: var(--ant-color-bg-text-active);
+}

@@ -1,0 +1,62 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# WebStorm
+.idea
+
+# production
+/build
+/dist
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# package lock
+package-lock.json
+yarn.lock
+# pnpm-lock.yaml
+
+# vitepress
+**/.vitepress/dist
+**/.vitepress/cache
+
+.eslintcache
+analyzer
+TODO.md
+
+.claude/*.local.*
+
+label-system-admin-v3
+label-system-llm
+.codegraph
+
+# L-8 (第三轮 Review): IDE/agent 工具产物, 不入库
+memory/
+analyzer/
+
+# === 发布仓库补充忽略 (agent/工具残留, 不该入库) ===
+test-results/
+.claude/
+.playwright-mcp/
+.omo/
+.opencode/
+.zed/
+.gemini/
+.hermes/
+.codex
+.coverage

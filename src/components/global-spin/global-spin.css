@@ -1,0 +1,15 @@
+/* GlobalSpin 样式 (P2-12: 从 react-jss 迁移到普通 CSS).
+ * 原 createUseStyles .rootSpin: height:100% + .ant-spin-container height:100%
+ * + .ant-spin-spinning max-height:100% !important. 无主题 token, 纯高度覆盖.
+ */
+.global-spin {
+	height: 100%;
+}
+
+.global-spin .ant-spin-container {
+	height: 100%;
+}
+
+.global-spin .ant-spin-spinning {
+	max-height: 100% !important;
+}

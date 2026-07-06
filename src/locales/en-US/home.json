@@ -1,0 +1,56 @@
+{
+	"badge": "Welcome",
+	"introduction": "A multi-role annotation management system covering task creation, annotation delivery, result review, and archive tracking to keep data production reliable.",
+	"quickStartTitle": "Current Version Note",
+	"quickStartDescription": "The home page is currently in static welcome mode to avoid relying on unavailable visualization APIs. Dashboard charts and notifications can be re-enabled after backend APIs are ready.",
+	"highlights": {
+		"efficiency": {
+			"title": "Efficient Task Flow",
+			"description": "Track assignment and status in one place to reduce repeated communication and improve execution speed."
+		},
+		"quality": {
+			"title": "Controllable Quality",
+			"description": "Review and comparison workflows help catch deviations early and keep annotation standards consistent."
+		},
+		"traceability": {
+			"title": "Traceable Process",
+			"description": "Key operations and result versions are recorded for easier auditing and issue backtracking."
+		},
+		"collaboration": {
+			"title": "Multi-role Collaboration",
+			"description": "Support admin, annotator, and reviewer collaboration in a closed-loop data production workflow."
+		}
+	},
+	"newVisits": "New Visits",
+	"messages": "Messages",
+	"purchases": "Purchases",
+	"shoppings": "Shoppings",
+
+	"sales": "Sales",
+	"thisWeek": "This Week",
+	"thisMonth": "This Month",
+	"thisYear": "This Year",
+
+	"monday": "Monday",
+	"tuesday": "Tuesday",
+	"wednesday": "Wednesday",
+	"thursday": "Thursday",
+	"friday": "Friday",
+	"saturday": "Saturday",
+	"sunday": "Sunday",
+	"views": "Views",
+	"directAccess": "Direct Access",
+	"emailMarketing": "Email Marketing",
+	"affiliateAdvertise": "Affiliate Advertise",
+	"videoAdvertise": "Video Advertise",
+
+	"salesCategoryProportion": "Sales Category Proportion",
+	"electronics": "Electronics",
+	"homeGoods": "Home Goods",
+	"apparelAccessories": "Apparel Accessories",
+	"foodBeverages": "Food Beverages",
+	"beautySkincare": "Beauty Skincare",
+	"allChannels": "All Channels",
+	"online": "Online",
+	"site": "Site"
+}

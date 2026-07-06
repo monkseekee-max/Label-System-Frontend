@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+	<meta charset="utf-8" />
+	<link rel="icon" href="/favicon.ico" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="theme-color" content="#000000" />
+	<meta name="description" content="LLM Factory — 端到端大模型训练工厂，数据飞轮驱动的自动化模型迭代闭环" />
+	<link rel="apple-touch-icon" href="/logo192.png" />
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+	<!--
+			manifest.json provides metadata used when your web app is installed on a
+			user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+		-->
+	<link rel="manifest" href="/manifest.json" />
+	<!-- Inject the VITE_GLOB_APP_TITLE variable by Vite, configured in the .env file -->
+	<title>%VITE_GLOB_APP_TITLE%</title>
+</head>
+
+<body>
+	<noscript>You need to enable JavaScript to run this app.</noscript>
+	<div id="root">
+		<div id="__first_screen_loader__" aria-label="加载中" role="status">
+			<style>
+				#__first_screen_loader__{display:flex;align-items:center;justify-content:center;min-height:100vh;background:#fff}
+				@media(prefers-color-scheme:dark){#__first_screen_loader__{background:#141414}}
+				#__first_screen_loader__ .__fs_spinner__{width:32px;height:32px;border:3px solid #e5e7eb;border-top-color:#1677ff;border-radius:50%;animation:__fs_spin__ .8s linear infinite}
+				@media(prefers-color-scheme:dark){#__first_screen_loader__ .__fs_spinner__{border-color:#303030;border-top-color:#1677ff}}
+				@keyframes __fs_spin__{to{transform:rotate(360deg)}}
+			</style>
+			<div class="__fs_spinner__"></div>
+		</div>
+	</div>
+	<script type="module" src="/src/index.tsx"></script>
+</body>
+
+</html>

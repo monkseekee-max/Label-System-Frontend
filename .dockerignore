@@ -1,0 +1,51 @@
+# Version control
+.git
+.gitignore
+.gitattributes
+
+# Dependencies (will be installed in image)
+node_modules
+.pnpm-store
+
+# Build outputs
+dist
+build
+coverage
+.vitest
+.nyc_output
+
+# Environment & secrets - 严禁打入镜像
+.env
+.env.*
+!.env.example
+*.local
+
+# IDE & editor
+.vscode
+.idea
+.cursor
+.zed
+*.swp
+*.swo
+
+# Logs & cache
+logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+.eslintcache
+.parcel-cache
+
+# Tests
+__tests__
+*.test.ts
+*.test.tsx
+*.spec.ts
+*.spec.tsx
+
+# Misc
+.dockerignore
+Dockerfile
+.docker
+README.md
+LICENSE

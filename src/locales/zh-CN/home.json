@@ -1,0 +1,56 @@
+{
+	"badge": "欢迎使用",
+	"introduction": "面向多角色协作的标注管理系统，覆盖任务创建、标注执行、结果审核与历史归档，帮助团队稳定推进数据生产流程。",
+	"quickStartTitle": "当前版本说明",
+	"quickStartDescription": "首页当前为静态欢迎模式，避免依赖未上线的可视化接口。后续后端接口就绪后，可按需恢复数据看板与消息提醒能力。",
+	"highlights": {
+		"efficiency": {
+			"title": "任务流转高效",
+			"description": "围绕任务分配与状态跟踪，减少重复沟通，提升团队执行效率。"
+		},
+		"quality": {
+			"title": "质量可控",
+			"description": "支持审核与对比流程，帮助及时发现偏差并统一标注标准。"
+		},
+		"traceability": {
+			"title": "过程可追溯",
+			"description": "记录关键操作与结果版本，便于问题回溯与过程审计。"
+		},
+		"collaboration": {
+			"title": "多角色协作",
+			"description": "支持管理、标注、审核等角色协同，形成闭环的数据生产链路。"
+		}
+	},
+	"newVisits": "新增浏览",
+	"messages": "消息",
+	"purchases": "购买金额",
+	"shoppings": "购买数量",
+
+	"sales": "销售额",
+	"thisWeek": "本周",
+	"thisMonth": "本月",
+	"thisYear": "本年",
+	"monday": "星期一",
+	"tuesday": "星期二",
+	"wednesday": "星期三",
+	"thursday": "星期四",
+	"friday": "星期五",
+	"saturday": "星期六",
+	"sunday": "星期日",
+
+	"views": "访问量",
+	"directAccess": "直接访问",
+	"emailMarketing": "邮件营销",
+	"affiliateAdvertise": "联盟广告",
+	"videoAdvertise": "视频广告",
+
+	"salesCategoryProportion": "销售额类别占比",
+	"electronics": "电子产品",
+	"homeGoods": "家居用品",
+	"apparelAccessories": "服装饰品",
+	"foodBeverages": "食品饮料",
+	"beautySkincare": "美容护肤",
+	"allChannels": "全部渠道",
+	"online": "线上",
+	"site": "门店"
+}

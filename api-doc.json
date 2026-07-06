@@ -1,0 +1,4169 @@
+{
+	"openapi": "3.0.1",
+	"info": {
+		"title": "默认模块",
+		"description": "知识图谱智能标注平台后端接口文档",
+		"version": "1.0.0"
+	},
+	"tags": [
+		{
+			"name": "认证管理"
+		},
+		{
+			"name": "平台公司管理员管理"
+		},
+		{
+			"name": "平台公司管理"
+		},
+		{
+			"name": "公司员工管理"
+		},
+		{
+			"name": "系统配置管理"
+		},
+		{
+			"name": "标注任务管理"
+		},
+		{
+			"name": "资源管理"
+		},
+		{
+			"name": "标注结果管理"
+		},
+		{
+			"name": "标注结果归档管理"
+		}
+	],
+	"paths": {
+		"/api/auth/logout": {
+			"post": {
+				"summary": "退出登录",
+				"deprecated": false,
+				"description": "",
+				"operationId": "logout",
+				"tags": [
+					"认证管理"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "Bearer 访问令牌",
+						"required": true,
+						"example": "Bearer eyJhbGciOiJIUzI1NiJ9.demo.token",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ResultVoid"
+								}
+							}
+						},
+						"headers": {}
+					}
+				},
+				"security": []
+			}
+		},
+		"/api/auth/login": {
+			"post": {
+				"summary": "登录",
+				"deprecated": false,
+				"description": "",
+				"operationId": "login",
+				"tags": [
+					"认证管理"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "",
+						"example": "Bearer {{token}}",
+						"schema": {
+							"type": "string",
+							"default": "Bearer {{token}}"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/LoginRequest"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ResultLoginResponse"
+								}
+							}
+						},
+						"headers": {}
+					}
+				},
+				"security": []
+			}
+		},
+		"/api/auth/change-password": {
+			"post": {
+				"summary": "修改密码",
+				"deprecated": false,
+				"description": "",
+				"operationId": "changePassword",
+				"tags": [
+					"认证管理"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "",
+						"example": "Bearer {{token}}",
+						"schema": {
+							"type": "string",
+							"default": "Bearer {{token}}"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ChangePasswordRequest"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ResultVoid"
+								}
+							}
+						},
+						"headers": {}
+					}
+				},
+				"security": []
+			}
+		},
+		"/api/auth/me": {
+			"get": {
+				"summary": "获取当前登录态",
+				"deprecated": false,
+				"description": "",
+				"operationId": "currentUser",
+				"tags": [
+					"认证管理"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "",
+						"example": "Bearer {{token}}",
+						"schema": {
+							"type": "string",
+							"default": "Bearer {{token}}"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ResultCurrentUserResponse"
+								}
+							}
+						},
+						"headers": {}
+					}
+				},
+				"security": []
+			}
+		},
+		"/api/auth/companies": {
+			"get": {
+				"summary": "根据手机号查询可登录公司",
+				"deprecated": false,
+				"description": "",
+				"operationId": "listCompanies_1",
+				"tags": [
+					"认证管理"
+				],
+				"parameters": [
+					{
+						"name": "phone",
+						"in": "query",
+						"description": "手机号",
+						"required": true,
+						"example": "13800138000",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "",
+						"example": "Bearer {{token}}",
+						"schema": {
+							"type": "string",
+							"default": "Bearer {{token}}"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ResultListCompanyOptionResponse"
+								}
+							}
+						},
+						"headers": {}
+					}
+				},
+				"security": []
+			}
+		},
+		"/api/platform/company-admins/{companyId}/{userId}/status": {
+			"put": {
+				"summary": "修改公司管理员状态",
+				"deprecated": false,
+				"description": "",
+				"operationId": "updateCompanyAdminStatus",
+				"tags": [
+					"平台公司管理员管理"
+				],
+				"parameters": [
+					{
+						"name": "companyId",
+						"in": "path",
+						"description": "公司ID",
+						"required": true,
+						"example": 191000000000000000,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					},
+					{
+						"name": "userId",
+						"in": "path",
+						"description": "用户ID",
+						"required": true,
+						"example": 191000000000000030,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					},
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "",
+						"example": "Bearer {{token}}",
+						"schema": {
+							"type": "string",
+							"default": "Bearer {{token}}"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateUserStatusRequest"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ResultVoid"
+								}
+							}
+						},
+						"headers": {}
+					}
+				},
+				"security": []
+			}
+		},
+		"/api/platform/company-admins": {
+			"get": {
+				"summary": "查询指定公司管理员列表",
+				"deprecated": false,
+				"description": "",
+				"operationId": "listCompanyAdmins",
+				"tags": [
+					"平台公司管理员管理"
+				],
+				"parameters": [
+					{
+						"name": "companyId",
+						"in": "query",
+						"description": "公司ID",
+						"required": true,
+						"example": 191000000000000000,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					},
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "",
+						"example": "Bearer {{token}}",
+						"schema": {
+							"type": "string",
+							"default": "Bearer {{token}}"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ResultListUserResponse"
+								}
+							}
+						},
+						"headers": {}
+					}
+				},
+				"security": []
+			},
+			"post": {
+				"summary": "创建公司管理员",
+				"deprecated": false,
+				"description": "",
+				"operationId": "createCompanyAdmin",
+				"tags": [
+					"平台公司管理员管理"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "",
+						"example": "Bearer {{token}}",
+						"schema": {
+							"type": "string",
+							"default": "Bearer {{token}}"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateCompanyAdminRequest"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ResultUserResponse"
+								}
+							}
+						},
+						"headers": {}
+					}
+				},
+				"security": []
+			}
+		},
+		"/api/platform/company-admins/system-engineer": {
+			"post": {
+				"summary": "创建系统管理员",
+				"deprecated": false,
+				"description": "",
+				"operationId": "createSystemEngineerAdmin",
+				"tags": [
+					"平台公司管理员管理"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "",
+						"example": "Bearer {{token}}",
+						"schema": {
+							"type": "string",
+							"default": "Bearer {{token}}"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateSystemEngineerAdminRequest"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ResultUserResponse"
+								}
+							}
+						},
+						"headers": {}
+					}
+				},
+				"security": []
+			}
+		},
+		"/api/platform/company-admins/all": {
+			"get": {
+				"summary": "查询所有公司用户列表",
+				"deprecated": false,
+				"description": "",
+				"operationId": "listAllUsers",
+				"tags": [
+					"平台公司管理员管理"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "",
+						"example": "Bearer {{token}}",
+						"schema": {
+							"type": "string",
+							"default": "Bearer {{token}}"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ResultListUserResponse"
+								}
+							}
+						},
+						"headers": {}
+					}
+				},
+				"security": []
+			}
+		},
+		"/api/platform/companies/{companyId}/status": {
+			"put": {
+				"summary": "修改公司状态",
+				"deprecated": false,
+				"description": "",
+				"operationId": "updateCompanyStatus",
+				"tags": [
+					"平台公司管理"
+				],
+				"parameters": [
+					{
+						"name": "companyId",
+						"in": "path",
+						"description": "公司ID",
+						"required": true,
+						"example": 191000000000000000,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					},
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "",
+						"example": "Bearer {{token}}",
+						"schema": {
+							"type": "string",
+							"default": "Bearer {{token}}"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateCompanyStatusRequest"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ResultVoid"
+								}
+							}
+						},
+						"headers": {}
+					}
+				},
+				"security": []
+			}
+		},
+		"/api/platform/companies": {
+			"get": {
+				"summary": "获取公司列表",
+				"deprecated": false,
+				"description": "",
+				"operationId": "listCompanies",
+				"tags": [
+					"平台公司管理"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "",
+						"example": "Bearer {{token}}",
+						"schema": {
+							"type": "string",
+							"default": "Bearer {{token}}"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ResultListCompanyResponse"
+								}
+							}
+						},
+						"headers": {}
+					}
+				},
+				"security": []
+			},
+			"post": {
+				"summary": "创建公司",
+				"deprecated": false,
+				"description": "",
+				"operationId": "createCompany",
+				"tags": [
+					"平台公司管理"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "",
+						"example": "Bearer {{token}}",
+						"schema": {
+							"type": "string",
+							"default": "Bearer {{token}}"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateCompanyRequest"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ResultCompanyResponse"
+								}
+							}
+						},
+						"headers": {}
+					}
+				},
+				"security": []
+			}
+		},
+		"/api/company/users/{userId}/status": {
+			"put": {
+				"summary": "修改员工状态",
+				"deprecated": false,
+				"description": "",
+				"operationId": "updateStatus",
+				"tags": [
+					"公司员工管理"
+				],
+				"parameters": [
+					{
+						"name": "userId",
+						"in": "path",
+						"description": "用户ID",
+						"required": true,
+						"example": 191000000000000030,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					},
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "",
+						"example": "Bearer {{token}}",
+						"schema": {
+							"type": "string",
+							"default": "Bearer {{token}}"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateUserStatusRequest"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ResultVoid"
+								}
+							}
+						},
+						"headers": {}
+					}
+				},
+				"security": []
+			}
+		},
+		"/api/company/users/{userId}/assignment": {
+			"put": {
+				"summary": "修改员工角色和岗位",
+				"deprecated": false,
+				"description": "",
+				"operationId": "updateAssignment",
+				"tags": [
+					"公司员工管理"
+				],
+				"parameters": [
+					{
+						"name": "userId",
+						"in": "path",
+						"description": "用户ID",
+						"required": true,
+						"example": 191000000000000030,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					},
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "",
+						"example": "Bearer {{token}}",
+						"schema": {
+							"type": "string",
+							"default": "Bearer {{token}}"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateUserAssignmentRequest"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ResultVoid"
+								}
+							}
+						},
+						"headers": {}
+					}
+				},
+				"security": []
+			}
+		},
+		"/api/company/users": {
+			"get": {
+				"summary": "获取当前公司员工列表",
+				"deprecated": false,
+				"description": "",
+				"operationId": "listUsers",
+				"tags": [
+					"公司员工管理"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "",
+						"example": "Bearer {{token}}",
+						"schema": {
+							"type": "string",
+							"default": "Bearer {{token}}"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ResultListUserResponse"
+								}
+							}
+						},
+						"headers": {}
+					}
+				},
+				"security": []
+			},
+			"post": {
+				"summary": "创建当前公司员工",
+				"deprecated": false,
+				"description": "",
+				"operationId": "createUser",
+				"tags": [
+					"公司员工管理"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "",
+						"example": "Bearer {{token}}",
+						"schema": {
+							"type": "string",
+							"default": "Bearer {{token}}"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateUserRequest"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ResultUserResponse"
+								}
+							}
+						},
+						"headers": {}
+					}
+				},
+				"security": []
+			}
+		},
+		"/api/sys-configs/{id}": {
+			"get": {
+				"summary": "查询系统配置详情",
+				"deprecated": false,
+				"description": "",
+				"operationId": "detail",
+				"tags": [
+					"系统配置管理"
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "配置ID",
+						"required": true,
+						"example": 191000000000000500,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					},
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "",
+						"example": "Bearer {{token}}",
+						"schema": {
+							"type": "string",
+							"default": "Bearer {{token}}"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ResultSysConfigResponse"
+								}
+							}
+						},
+						"headers": {}
+					}
+				},
+				"security": []
+			},
+			"put": {
+				"summary": "更新系统配置",
+				"deprecated": false,
+				"description": "",
+				"operationId": "update",
+				"tags": [
+					"系统配置管理"
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "配置ID",
+						"required": true,
+						"example": 191000000000000500,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					},
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "",
+						"example": "Bearer {{token}}",
+						"schema": {
+							"type": "string",
+							"default": "Bearer {{token}}"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateSysConfigRequest"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ResultSysConfigResponse"
+								}
+							}
+						},
+						"headers": {}
+					}
+				},
+				"security": []
+			}
+		},
+		"/api/sys-configs": {
+			"get": {
+				"summary": "分页查询系统配置",
+				"deprecated": false,
+				"description": "",
+				"operationId": "page",
+				"tags": [
+					"系统配置管理"
+				],
+				"parameters": [
+					{
+						"name": "configType",
+						"in": "query",
+						"description": "配置类型",
+						"required": false,
+						"example": "MODEL",
+						"schema": {
+							"type": "string",
+							"description": "配置类型",
+							"example": "MODEL"
+						}
+					},
+					{
+						"name": "configName",
+						"in": "query",
+						"description": "配置名称",
+						"required": false,
+						"example": "qwen-plus-extract",
+						"schema": {
+							"type": "string",
+							"description": "配置名称",
+							"example": "qwen-plus-extract"
+						}
+					},
+					{
+						"name": "status",
+						"in": "query",
+						"description": "配置状态",
+						"required": false,
+						"example": "ENABLED",
+						"schema": {
+							"type": "string",
+							"description": "配置状态",
+							"example": "ENABLED"
+						}
+					},
+					{
+						"name": "pageNo",
+						"in": "query",
+						"description": "页码",
+						"required": false,
+						"example": "1",
+						"schema": {
+							"type": "string",
+							"description": "页码",
+							"example": 1
+						}
+					},
+					{
+						"name": "pageSize",
+						"in": "query",
+						"description": "每页数量",
+						"required": false,
+						"example": "10",
+						"schema": {
+							"type": "string",
+							"description": "每页数量",
+							"example": 10
+						}
+					},
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "",
+						"example": "Bearer {{token}}",
+						"schema": {
+							"type": "string",
+							"default": "Bearer {{token}}"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ResultPageResultSysConfigResponse"
+								}
+							}
+						},
+						"headers": {}
+					}
+				},
+				"security": []
+			},
+			"post": {
+				"summary": "创建系统配置",
+				"deprecated": false,
+				"description": "",
+				"operationId": "create",
+				"tags": [
+					"系统配置管理"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "",
+						"example": "Bearer {{token}}",
+						"schema": {
+							"type": "string",
+							"default": "Bearer {{token}}"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/SaveSysConfigRequest"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ResultSysConfigResponse"
+								}
+							}
+						},
+						"headers": {}
+					}
+				},
+				"security": []
+			}
+		},
+		"/api/annotation-tasks/{id}": {
+			"get": {
+				"summary": "查询标注任务详情",
+				"deprecated": false,
+				"description": "",
+				"operationId": "detail_2",
+				"tags": [
+					"标注任务管理"
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "任务ID",
+						"required": true,
+						"example": 191000000000000300,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					},
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "",
+						"example": "Bearer {{token}}",
+						"schema": {
+							"type": "string",
+							"default": "Bearer {{token}}"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ResultAnnotationTaskResponse"
+								}
+							}
+						},
+						"headers": {}
+					}
+				},
+				"security": []
+			},
+			"put": {
+				"summary": "更新标注任务",
+				"deprecated": false,
+				"description": "",
+				"operationId": "update_1",
+				"tags": [
+					"标注任务管理"
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "任务ID",
+						"required": true,
+						"example": 191000000000000300,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					},
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "",
+						"example": "Bearer {{token}}",
+						"schema": {
+							"type": "string",
+							"default": "Bearer {{token}}"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateAnnotationTaskRequest"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ResultAnnotationTaskResponse"
+								}
+							}
+						},
+						"headers": {}
+					}
+				},
+				"security": []
+			},
+			"delete": {
+				"summary": "删除标注任务",
+				"deprecated": false,
+				"description": "",
+				"operationId": "delete_1",
+				"tags": [
+					"标注任务管理"
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "任务ID",
+						"required": true,
+						"example": 191000000000000300,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					},
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "",
+						"example": "Bearer {{token}}",
+						"schema": {
+							"type": "string",
+							"default": "Bearer {{token}}"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ResultVoid"
+								}
+							}
+						},
+						"headers": {}
+					}
+				},
+				"security": []
+			}
+		},
+		"/api/annotation-tasks": {
+			"get": {
+				"summary": "分页查询标注任务",
+				"deprecated": false,
+				"description": "",
+				"operationId": "page_2",
+				"tags": [
+					"标注任务管理"
+				],
+				"parameters": [
+					{
+						"name": "keyword",
+						"in": "query",
+						"description": "关键字",
+						"required": false,
+						"example": "运输",
+						"schema": {
+							"type": "string",
+							"description": "关键字",
+							"example": "运输"
+						}
+					},
+					{
+						"name": "taskType",
+						"in": "query",
+						"description": "任务类型",
+						"required": false,
+						"example": "EXTRACT_QA",
+						"schema": {
+							"type": "string",
+							"description": "任务类型",
+							"example": "EXTRACT_QA"
+						}
+					},
+					{
+						"name": "taskStatus",
+						"in": "query",
+						"description": "任务状态",
+						"required": false,
+						"example": "PENDING",
+						"schema": {
+							"type": "string",
+							"description": "任务状态",
+							"example": "PENDING"
+						}
+					},
+					{
+						"name": "resourceId",
+						"in": "query",
+						"description": "资源ID",
+						"required": false,
+						"example": "191000000000000100",
+						"schema": {
+							"type": "string",
+							"description": "资源ID",
+							"example": 191000000000000100
+						}
+					},
+					{
+						"name": "isDeleted",
+						"in": "query",
+						"description": "是否已删除",
+						"required": false,
+						"example": "false",
+						"schema": {
+							"type": "string",
+							"description": "是否已删除",
+							"example": false
+						}
+					},
+					{
+						"name": "pageNo",
+						"in": "query",
+						"description": "页码",
+						"required": false,
+						"example": "1",
+						"schema": {
+							"type": "string",
+							"description": "页码",
+							"example": 1
+						}
+					},
+					{
+						"name": "pageSize",
+						"in": "query",
+						"description": "每页数量",
+						"required": false,
+						"example": "10",
+						"schema": {
+							"type": "string",
+							"description": "每页数量",
+							"example": 10
+						}
+					},
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "",
+						"example": "Bearer {{token}}",
+						"schema": {
+							"type": "string",
+							"default": "Bearer {{token}}"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ResultPageResultAnnotationTaskResponse"
+								}
+							}
+						},
+						"headers": {}
+					}
+				},
+				"security": []
+			},
+			"post": {
+				"summary": "创建标注任务",
+				"deprecated": false,
+				"description": "",
+				"operationId": "create_1",
+				"tags": [
+					"标注任务管理"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "",
+						"example": "Bearer {{token}}",
+						"schema": {
+							"type": "string",
+							"default": "Bearer {{token}}"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateAnnotationTaskRequest"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ResultAnnotationTaskResponse"
+								}
+							}
+						},
+						"headers": {}
+					}
+				},
+				"security": []
+			}
+		},
+		"/api/source-resources/{id}/bbox": {
+			"get": {
+				"summary": "查询图片资源BBOX标注",
+				"deprecated": false,
+				"description": "",
+				"operationId": "getImageBbox",
+				"tags": [
+					"资源管理"
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "资源ID",
+						"required": true,
+						"example": 191000000000000100,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					},
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "",
+						"example": "Bearer {{token}}",
+						"schema": {
+							"type": "string",
+							"default": "Bearer {{token}}"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ResultImageBboxResponse"
+								}
+							}
+						},
+						"headers": {}
+					}
+				},
+				"security": []
+			},
+			"post": {
+				"summary": "保存图片资源BBOX标注",
+				"deprecated": false,
+				"description": "",
+				"operationId": "saveImageBbox",
+				"tags": [
+					"资源管理"
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "资源ID",
+						"required": true,
+						"example": 191000000000000100,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					},
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "",
+						"example": "Bearer {{token}}",
+						"schema": {
+							"type": "string",
+							"default": "Bearer {{token}}"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/SaveImageBboxRequest"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ResultImageBboxResponse"
+								}
+							}
+						},
+						"headers": {}
+					}
+				},
+				"security": []
+			},
+			"delete": {
+				"summary": "删除图片资源BBOX标注",
+				"deprecated": false,
+				"description": "",
+				"operationId": "deleteImageBbox",
+				"tags": [
+					"资源管理"
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "资源ID",
+						"required": true,
+						"example": 191000000000000100,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					},
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "",
+						"example": "Bearer {{token}}",
+						"schema": {
+							"type": "string",
+							"default": "Bearer {{token}}"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ResultVoid"
+								}
+							}
+						},
+						"headers": {}
+					}
+				},
+				"security": []
+			}
+		},
+		"/api/source-resources/upload": {
+			"post": {
+				"summary": "上传资源",
+				"deprecated": false,
+				"description": "",
+				"operationId": "upload",
+				"tags": [
+					"资源管理"
+				],
+				"parameters": [
+					{
+						"name": "resourceName",
+						"in": "query",
+						"description": "资源名称",
+						"required": false,
+						"example": "2026年4月运输巡检记录",
+						"schema": {
+							"type": "string",
+							"description": "资源名称",
+							"example": "2026年4月运输巡检记录"
+						}
+					},
+					{
+						"name": "resourceType",
+						"in": "query",
+						"description": "资源类型：TEXT、IMAGE、VIDEO",
+						"required": false,
+						"example": "TEXT",
+						"schema": {
+							"type": "string",
+							"description": "资源类型：TEXT、IMAGE、VIDEO",
+							"example": "TEXT"
+						}
+					},
+					{
+						"name": "remark",
+						"in": "query",
+						"description": "备注",
+						"required": false,
+						"example": "第一批导入样本",
+						"schema": {
+							"type": "string",
+							"description": "备注",
+							"example": "第一批导入样本"
+						}
+					},
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "",
+						"example": "Bearer {{token}}",
+						"schema": {
+							"type": "string",
+							"default": "Bearer {{token}}"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ResultSourceUploadResponse"
+								}
+							}
+						},
+						"headers": {}
+					}
+				},
+				"security": []
+			}
+		},
+		"/api/source-resources": {
+			"get": {
+				"summary": "分页查询资源",
+				"deprecated": false,
+				"description": "",
+				"operationId": "page_1",
+				"tags": [
+					"资源管理"
+				],
+				"parameters": [
+					{
+						"name": "keyword",
+						"in": "query",
+						"description": "关键字",
+						"required": false,
+						"example": "运输",
+						"schema": {
+							"type": "string",
+							"description": "关键字",
+							"example": "运输"
+						}
+					},
+					{
+						"name": "resourceType",
+						"in": "query",
+						"description": "资源类型",
+						"required": false,
+						"example": "TEXT",
+						"schema": {
+							"type": "string",
+							"description": "资源类型",
+							"example": "TEXT"
+						}
+					},
+					{
+						"name": "sourceStatus",
+						"in": "query",
+						"description": "资源状态",
+						"required": false,
+						"example": "READY",
+						"schema": {
+							"type": "string",
+							"description": "资源状态",
+							"example": "READY"
+						}
+					},
+					{
+						"name": "pageNo",
+						"in": "query",
+						"description": "页码（可选，与pageSize同时提供时启用分页）",
+						"required": false,
+						"example": "1",
+						"schema": {
+							"type": "string",
+							"description": "页码（可选，与pageSize同时提供时启用分页）",
+							"example": 1
+						}
+					},
+					{
+						"name": "pageSize",
+						"in": "query",
+						"description": "每页数量（可选，与pageNo同时提供时启用分页）",
+						"required": false,
+						"example": "10",
+						"schema": {
+							"type": "string",
+							"description": "每页数量（可选，与pageNo同时提供时启用分页）",
+							"example": 10
+						}
+					},
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "",
+						"example": "Bearer {{token}}",
+						"schema": {
+							"type": "string",
+							"default": "Bearer {{token}}"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ResultPageResultSourceResourceResponse"
+								}
+							}
+						},
+						"headers": {}
+					}
+				},
+				"security": []
+			}
+		},
+		"/api/source-resources/{id}": {
+			"get": {
+				"summary": "查询资源详情",
+				"deprecated": false,
+				"description": "",
+				"operationId": "detail_1",
+				"tags": [
+					"资源管理"
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "资源ID",
+						"required": true,
+						"example": 191000000000000100,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					},
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "",
+						"example": "Bearer {{token}}",
+						"schema": {
+							"type": "string",
+							"default": "Bearer {{token}}"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ResultSourceResourceResponse"
+								}
+							}
+						},
+						"headers": {}
+					}
+				},
+				"security": []
+			},
+			"delete": {
+				"summary": "删除资源",
+				"deprecated": false,
+				"description": "",
+				"operationId": "delete",
+				"tags": [
+					"资源管理"
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "资源ID",
+						"required": true,
+						"example": 191000000000000100,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					},
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "",
+						"example": "Bearer {{token}}",
+						"schema": {
+							"type": "string",
+							"default": "Bearer {{token}}"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ResultVoid"
+								}
+							}
+						},
+						"headers": {}
+					}
+				},
+				"security": []
+			}
+		},
+		"/api/source-resources/{id}/download": {
+			"get": {
+				"summary": "下载资源",
+				"deprecated": false,
+				"description": "",
+				"operationId": "downloadResource",
+				"tags": [
+					"资源管理"
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "资源ID",
+						"required": true,
+						"example": 191000000000000100,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					},
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "",
+						"example": "Bearer {{token}}",
+						"schema": {
+							"type": "string",
+							"default": "Bearer {{token}}"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"type": "string",
+										"format": "byte"
+									}
+								}
+							}
+						},
+						"headers": {}
+					}
+				},
+				"security": []
+			}
+		},
+		"/api/annotation-results/{id}/merge": {
+			"post": {
+				"summary": "提交合并审核结果,REVIEWER岗位以上可操作",
+				"deprecated": false,
+				"description": "",
+				"operationId": "mergeReviewResult",
+				"tags": [
+					"标注结果管理"
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "结果ID",
+						"required": true,
+						"example": 191000000000000420,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					},
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "",
+						"example": "Bearer {{token}}",
+						"schema": {
+							"type": "string",
+							"default": "Bearer {{token}}"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/MergeReviewResultRequest"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"headers": {}
+					}
+				},
+				"security": []
+			}
+		},
+		"/api/annotation-results": {
+			"get": {
+				"summary": "分页查询标注结果",
+				"deprecated": false,
+				"description": "",
+				"operationId": "pageResults",
+				"tags": [
+					"标注结果管理"
+				],
+				"parameters": [
+					{
+						"name": "taskId",
+						"in": "query",
+						"description": "任务ID",
+						"required": false,
+						"example": 191000000000000300,
+						"schema": {
+							"type": "integer",
+							"description": "任务ID",
+							"format": "int64",
+							"example": 191000000000000300
+						}
+					},
+					{
+						"name": "resourceId",
+						"in": "query",
+						"description": "资源ID",
+						"required": false,
+						"example": 191000000000000100,
+						"schema": {
+							"type": "integer",
+							"description": "资源ID",
+							"format": "int64",
+							"example": 191000000000000100
+						}
+					},
+					{
+						"name": "requiresManualReview",
+						"in": "query",
+						"description": "是否需要人工审核",
+						"required": false,
+						"example": "true",
+						"schema": {
+							"type": "boolean",
+							"description": "是否需要人工审核",
+							"example": true
+						}
+					},
+					{
+						"name": "runtimeStatus",
+						"in": "query",
+						"description": "运行态状态",
+						"required": false,
+						"example": "MANUAL_REVIEW_PENDING",
+						"schema": {
+							"type": "string",
+							"description": "运行态状态",
+							"example": "MANUAL_REVIEW_PENDING"
+						}
+					},
+					{
+						"name": "pageNo",
+						"in": "query",
+						"description": "页码",
+						"required": false,
+						"example": 1,
+						"schema": {
+							"type": "integer",
+							"description": "页码",
+							"format": "int32",
+							"example": 1
+						}
+					},
+					{
+						"name": "pageSize",
+						"in": "query",
+						"description": "每页数量",
+						"required": false,
+						"example": 10,
+						"schema": {
+							"type": "integer",
+							"description": "每页数量",
+							"format": "int32",
+							"example": 10
+						}
+					},
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "",
+						"example": "Bearer {{token}}",
+						"schema": {
+							"type": "string",
+							"default": "Bearer {{token}}"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/PageResultAnnotationResultResponse"
+								}
+							}
+						},
+						"headers": {}
+					}
+				},
+				"security": []
+			}
+		},
+		"/api/annotation-results/{id}": {
+			"get": {
+				"summary": "查询标注结果详情",
+				"deprecated": false,
+				"description": "",
+				"operationId": "getResult",
+				"tags": [
+					"标注结果管理"
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "结果ID",
+						"required": true,
+						"example": 191000000000000420,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					},
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "",
+						"example": "Bearer {{token}}",
+						"schema": {
+							"type": "string",
+							"default": "Bearer {{token}}"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/AnnotationResultResponse"
+								}
+							}
+						},
+						"headers": {}
+					}
+				},
+				"security": []
+			}
+		},
+		"/api/annotation-results/{id}/compare": {
+			"get": {
+				"summary": "查询结果比对信息，REVIEWER岗位以上可操作",
+				"deprecated": false,
+				"description": "",
+				"operationId": "compareResult",
+				"tags": [
+					"标注结果管理"
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "结果ID",
+						"required": true,
+						"example": 191000000000000420,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					},
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "",
+						"example": "Bearer {{token}}",
+						"schema": {
+							"type": "string",
+							"default": "Bearer {{token}}"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/AnnotationResultCompareResponse"
+								}
+							}
+						},
+						"headers": {}
+					}
+				},
+				"security": []
+			}
+		},
+		"/api/annotation-result-history": {
+			"get": {
+				"summary": "分页查询归档历史",
+				"deprecated": false,
+				"description": "",
+				"operationId": "pageHistory",
+				"tags": [
+					"标注结果归档管理"
+				],
+				"parameters": [
+					{
+						"name": "taskId",
+						"in": "query",
+						"description": "任务ID",
+						"required": false,
+						"example": 701,
+						"schema": {
+							"type": "integer",
+							"description": "任务ID",
+							"format": "int64",
+							"example": 701
+						}
+					},
+					{
+						"name": "resourceId",
+						"in": "query",
+						"description": "资源ID",
+						"required": false,
+						"example": 601,
+						"schema": {
+							"type": "integer",
+							"description": "资源ID",
+							"format": "int64",
+							"example": 601
+						}
+					},
+					{
+						"name": "pageNo",
+						"in": "query",
+						"description": "页码",
+						"required": false,
+						"example": 1,
+						"schema": {
+							"type": "integer",
+							"description": "页码",
+							"format": "int32",
+							"example": 1
+						}
+					},
+					{
+						"name": "pageSize",
+						"in": "query",
+						"description": "每页数量",
+						"required": false,
+						"example": 10,
+						"schema": {
+							"type": "integer",
+							"description": "每页数量",
+							"format": "int32",
+							"example": 10
+						}
+					},
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "",
+						"example": "Bearer {{token}}",
+						"schema": {
+							"type": "string",
+							"default": "Bearer {{token}}"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/PageResultAnnotationResultHistoryResponse"
+								}
+							}
+						},
+						"headers": {}
+					}
+				},
+				"security": []
+			}
+		},
+		"/api/annotation-result-history/{id}": {
+			"get": {
+				"summary": "查询归档历史详情",
+				"deprecated": false,
+				"description": "",
+				"operationId": "getHistory",
+				"tags": [
+					"标注结果归档管理"
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "历史记录ID",
+						"required": true,
+						"example": 901,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					},
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "",
+						"example": "Bearer {{token}}",
+						"schema": {
+							"type": "string",
+							"default": "Bearer {{token}}"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/AnnotationResultHistoryResponse"
+								}
+							}
+						},
+						"headers": {}
+					}
+				},
+				"security": []
+			}
+		},
+		"/api/annotation-result-history/{id}/content": {
+			"get": {
+				"summary": "加载归档文件内容",
+				"deprecated": false,
+				"description": "",
+				"operationId": "loadFileContent",
+				"tags": [
+					"标注结果归档管理"
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "历史记录ID",
+						"required": true,
+						"example": 901,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					},
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "",
+						"example": "Bearer {{token}}",
+						"schema": {
+							"type": "string",
+							"default": "Bearer {{token}}"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/FileContentResponse"
+								}
+							}
+						},
+						"headers": {}
+					}
+				},
+				"security": []
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"ResultVoid": {
+				"type": "object",
+				"properties": {
+					"code": {
+						"type": "integer",
+						"description": "业务状态码",
+						"format": "int32",
+						"example": 0
+					},
+					"message": {
+						"type": "string",
+						"description": "返回消息",
+						"example": "success"
+					},
+					"data": {
+						"type": "object",
+						"description": "返回数据",
+						"properties": {},
+						"example": {}
+					}
+				},
+				"description": "统一返回结果"
+			},
+			"LoginRequest": {
+				"required": [
+					"companyCode",
+					"password",
+					"phone"
+				],
+				"type": "object",
+				"properties": {
+					"phone": {
+						"type": "string",
+						"description": "手机号",
+						"example": "平台管理员:13900000000"
+					},
+					"companyCode": {
+						"type": "string",
+						"description": "公司编码",
+						"example": "平台编号:PLATFORM"
+					},
+					"password": {
+						"type": "string",
+						"description": "登录密码",
+						"example": "平台密码:admin@123"
+					}
+				},
+				"description": "登录请求"
+			},
+			"LoginResponse": {
+				"type": "object",
+				"properties": {
+					"token": {
+						"type": "string",
+						"description": "访问令牌",
+						"example": "eyJhbGciOiJIUzI1NiJ9.demo.token"
+					},
+					"company": {
+						"$ref": "#/components/schemas/CompanyOptionResponse"
+					},
+					"phone": {
+						"type": "string",
+						"description": "手机号",
+						"example": "13800138002"
+					},
+					"username": {
+						"type": "string",
+						"description": "用户名，可为空",
+						"example": "alpha-admin"
+					},
+					"realName": {
+						"type": "string",
+						"description": "真实姓名",
+						"example": "张审核"
+					},
+					"role": {
+						"type": "string",
+						"description": "角色枚举，枚举值：EMPLOYEE员工、MANAGER部门经理、ENGINEER总工程师",
+						"enum": [
+							"EMPLOYEE",
+							"MANAGER",
+							"ENGINEER"
+						],
+						"example": "EMPLOYEE"
+					},
+					"position": {
+						"type": "string",
+						"description": "岗位枚举，枚举值：ANNOTATOR标注员、DATA_TRAINER数据训练师、REVIEWER审核员、ADMIN公司管理员、SUPER_ADMIN超级管理员",
+						"enum": [
+							"ANNOTATOR",
+							"DATA_TRAINER",
+							"REVIEWER",
+							"ADMIN",
+							"SUPER_ADMIN"
+						],
+						"example": "REVIEWER"
+					},
+					"mustChangePassword": {
+						"type": "boolean",
+						"description": "是否必须修改密码",
+						"example": false
+					}
+				},
+				"description": "登录响应",
+				"example": {}
+			},
+			"ResultLoginResponse": {
+				"type": "object",
+				"properties": {
+					"code": {
+						"type": "integer",
+						"description": "业务状态码",
+						"format": "int32",
+						"example": 0
+					},
+					"message": {
+						"type": "string",
+						"description": "返回消息",
+						"example": "success"
+					},
+					"data": {
+						"$ref": "#/components/schemas/LoginResponse"
+					}
+				},
+				"description": "统一返回结果"
+			},
+			"UpdateUserStatusRequest": {
+				"required": [
+					"status"
+				],
+				"type": "object",
+				"properties": {
+					"status": {
+						"type": "string",
+						"description": "用户状态，枚举值：ENABLED启用、DISABLED禁用",
+						"enum": [
+							"ENABLED",
+							"DISABLED"
+						],
+						"example": "DISABLED"
+					}
+				},
+				"description": "修改员工状态请求"
+			},
+			"UpdateCompanyStatusRequest": {
+				"required": [
+					"status"
+				],
+				"type": "object",
+				"properties": {
+					"status": {
+						"type": "string",
+						"description": "公司状态，枚举值：ENABLED启用、DISABLED禁用",
+						"enum": [
+							"ENABLED",
+							"DISABLED"
+						],
+						"example": "ENABLED"
+					}
+				},
+				"description": "修改公司状态请求"
+			},
+			"UpdateUserAssignmentRequest": {
+				"required": [
+					"position",
+					"role"
+				],
+				"type": "object",
+				"properties": {
+					"role": {
+						"type": "string",
+						"description": "角色枚举，枚举值：EMPLOYEE员工、MANAGER部门经理、ENGINEER总工程师",
+						"enum": [
+							"EMPLOYEE",
+							"MANAGER",
+							"ENGINEER"
+						],
+						"example": "EMPLOYEE"
+					},
+					"position": {
+						"type": "string",
+						"description": "岗位枚举，枚举值：ANNOTATOR标注员、DATA_TRAINER数据训练师、REVIEWER审核员、ADMIN公司管理员、SUPER_ADMIN超级管理员",
+						"enum": [
+							"ANNOTATOR",
+							"DATA_TRAINER",
+							"REVIEWER",
+							"ADMIN",
+							"SUPER_ADMIN"
+						],
+						"example": "REVIEWER"
+					}
+				},
+				"description": "修改员工角色岗位请求"
+			},
+			"CreateCompanyAdminRequest": {
+				"required": [
+					"companyId",
+					"phone",
+					"realName"
+				],
+				"type": "object",
+				"properties": {
+					"companyId": {
+						"type": "integer",
+						"description": "公司ID",
+						"format": "int64",
+						"example": 191000000000000000
+					},
+					"phone": {
+						"type": "string",
+						"description": "手机号",
+						"example": "13800138001"
+					},
+					"username": {
+						"type": "string",
+						"description": "用户名，前端展示用，可为空",
+						"example": "platform-ops"
+					},
+					"realName": {
+						"type": "string",
+						"description": "真实姓名",
+						"example": "平台运维"
+					}
+				},
+				"description": "创建公司管理员请求"
+			},
+			"ResultUserResponse": {
+				"type": "object",
+				"properties": {
+					"code": {
+						"type": "integer",
+						"description": "业务状态码",
+						"format": "int32",
+						"example": 0
+					},
+					"message": {
+						"type": "string",
+						"description": "返回消息",
+						"example": "success"
+					},
+					"data": {
+						"$ref": "#/components/schemas/UserResponse"
+					}
+				},
+				"description": "统一返回结果"
+			},
+			"UserResponse": {
+				"type": "object",
+				"properties": {
+					"userId": {
+						"type": "integer",
+						"description": "用户ID",
+						"format": "int64",
+						"example": 191000000000000030
+					},
+					"companyId": {
+						"type": "integer",
+						"description": "公司ID",
+						"format": "int64",
+						"example": 191000000000000000
+					},
+					"phone": {
+						"type": "string",
+						"description": "手机号",
+						"example": "13800138002"
+					},
+					"username": {
+						"type": "string",
+						"description": "用户名，可为空",
+						"example": "alpha-admin"
+					},
+					"realName": {
+						"type": "string",
+						"description": "真实姓名",
+						"example": "张审核"
+					},
+					"role": {
+						"type": "string",
+						"description": "角色枚举，枚举值：EMPLOYEE员工、MANAGER部门经理、ENGINEER总工程师",
+						"enum": [
+							"EMPLOYEE",
+							"MANAGER",
+							"ENGINEER"
+						],
+						"example": "EMPLOYEE"
+					},
+					"position": {
+						"type": "string",
+						"description": "岗位枚举，枚举值：ANNOTATOR标注员、DATA_TRAINER数据训练师、REVIEWER审核员、ADMIN公司管理员、SUPER_ADMIN超级管理员",
+						"enum": [
+							"ANNOTATOR",
+							"DATA_TRAINER",
+							"REVIEWER",
+							"ADMIN",
+							"SUPER_ADMIN"
+						],
+						"example": "REVIEWER"
+					},
+					"status": {
+						"type": "string",
+						"description": "用户状态，枚举值：ENABLED启用、DISABLED禁用",
+						"enum": [
+							"ENABLED",
+							"DISABLED"
+						],
+						"example": "ENABLED"
+					},
+					"mustChangePassword": {
+						"type": "boolean",
+						"description": "是否必须修改密码",
+						"example": false
+					}
+				},
+				"description": "用户响应",
+				"example": {}
+			},
+			"CreateCompanyRequest": {
+				"required": [
+					"companyCode",
+					"companyName"
+				],
+				"type": "object",
+				"properties": {
+					"companyCode": {
+						"type": "string",
+						"description": "公司编码",
+						"example": "ALPHA"
+					},
+					"companyName": {
+						"type": "string",
+						"description": "公司名称",
+						"example": "阿尔法标注有限公司"
+					}
+				},
+				"description": "创建公司请求"
+			},
+			"CompanyResponse": {
+				"type": "object",
+				"properties": {
+					"companyId": {
+						"type": "integer",
+						"description": "公司ID",
+						"format": "int64",
+						"example": 191000000000000000
+					},
+					"companyCode": {
+						"type": "string",
+						"description": "公司编码",
+						"example": "ALPHA"
+					},
+					"companyName": {
+						"type": "string",
+						"description": "公司名称",
+						"example": "阿尔法标注有限公司"
+					},
+					"status": {
+						"type": "string",
+						"description": "公司状态，枚举值：ENABLED启用、DISABLED禁用",
+						"enum": [
+							"ENABLED",
+							"DISABLED"
+						],
+						"example": "ENABLED"
+					}
+				},
+				"description": "公司响应",
+				"example": {}
+			},
+			"ResultCompanyResponse": {
+				"type": "object",
+				"properties": {
+					"code": {
+						"type": "integer",
+						"description": "业务状态码",
+						"format": "int32",
+						"example": 0
+					},
+					"message": {
+						"type": "string",
+						"description": "返回消息",
+						"example": "success"
+					},
+					"data": {
+						"$ref": "#/components/schemas/CompanyResponse"
+					}
+				},
+				"description": "统一返回结果"
+			},
+			"CreateUserRequest": {
+				"required": [
+					"phone",
+					"position",
+					"realName",
+					"role"
+				],
+				"type": "object",
+				"properties": {
+					"phone": {
+						"type": "string",
+						"description": "手机号",
+						"example": "13800138002"
+					},
+					"username": {
+						"type": "string",
+						"description": "用户名，前端展示用，可为空",
+						"example": "alpha-admin"
+					},
+					"realName": {
+						"type": "string",
+						"description": "真实姓名",
+						"example": "张审核"
+					},
+					"role": {
+						"type": "string",
+						"description": "角色枚举，枚举值：EMPLOYEE员工、MANAGER部门经理、ENGINEER总工程师",
+						"enum": [
+							"EMPLOYEE",
+							"MANAGER",
+							"ENGINEER"
+						],
+						"example": "EMPLOYEE"
+					},
+					"position": {
+						"type": "string",
+						"description": "岗位枚举，枚举值：ANNOTATOR标注员、DATA_TRAINER数据训练师、REVIEWER审核员、ADMIN公司管理员、SUPER_ADMIN超级管理员",
+						"enum": [
+							"ANNOTATOR",
+							"DATA_TRAINER",
+							"REVIEWER",
+							"ADMIN",
+							"SUPER_ADMIN"
+						],
+						"example": "ANNOTATOR"
+					}
+				},
+				"description": "创建员工请求"
+			},
+			"CompanyOptionResponse": {
+				"type": "object",
+				"properties": {
+					"companyId": {
+						"type": "integer",
+						"description": "公司ID",
+						"format": "int64",
+						"example": 191000000000000000
+					},
+					"companyCode": {
+						"type": "string",
+						"description": "公司编码",
+						"example": "ALPHA"
+					},
+					"companyName": {
+						"type": "string",
+						"description": "公司名称",
+						"example": "阿尔法标注有限公司"
+					}
+				},
+				"description": "可登录公司选项",
+				"example": {
+					"companyId": 191000000000000000,
+					"companyCode": "ALPHA",
+					"companyName": "阿尔法标注有限公司"
+				}
+			},
+			"ChangePasswordRequest": {
+				"required": [
+					"confirmPassword",
+					"newPassword",
+					"oldPassword"
+				],
+				"type": "object",
+				"properties": {
+					"oldPassword": {
+						"type": "string",
+						"description": "旧密码",
+						"example": "P@ssw0rd!"
+					},
+					"newPassword": {
+						"type": "string",
+						"description": "新密码",
+						"example": "N3wP@ssw0rd!"
+					},
+					"confirmPassword": {
+						"type": "string",
+						"description": "确认新密码",
+						"example": "N3wP@ssw0rd!"
+					}
+				},
+				"description": "修改密码请求"
+			},
+			"ResultListUserResponse": {
+				"type": "object",
+				"properties": {
+					"code": {
+						"type": "integer",
+						"description": "业务状态码",
+						"format": "int32",
+						"example": 0
+					},
+					"message": {
+						"type": "string",
+						"description": "返回消息",
+						"example": "success"
+					},
+					"data": {
+						"type": "array",
+						"description": "返回数据",
+						"items": {
+							"$ref": "#/components/schemas/UserResponse"
+						},
+						"example": {}
+					}
+				},
+				"description": "统一返回结果"
+			},
+			"ResultListCompanyResponse": {
+				"type": "object",
+				"properties": {
+					"code": {
+						"type": "integer",
+						"description": "业务状态码",
+						"format": "int32",
+						"example": 0
+					},
+					"message": {
+						"type": "string",
+						"description": "返回消息",
+						"example": "success"
+					},
+					"data": {
+						"type": "array",
+						"description": "返回数据",
+						"items": {
+							"$ref": "#/components/schemas/CompanyResponse"
+						},
+						"example": {}
+					}
+				},
+				"description": "统一返回结果"
+			},
+			"CurrentUserResponse": {
+				"type": "object",
+				"properties": {
+					"userId": {
+						"type": "integer",
+						"description": "用户ID",
+						"format": "int64",
+						"example": 191000000000000030
+					},
+					"companyId": {
+						"type": "integer",
+						"description": "公司ID",
+						"format": "int64",
+						"example": 191000000000000000
+					},
+					"companyCode": {
+						"type": "string",
+						"description": "公司编码",
+						"example": "ALPHA"
+					},
+					"companyName": {
+						"type": "string",
+						"description": "公司名称",
+						"example": "阿尔法标注有限公司"
+					},
+					"phone": {
+						"type": "string",
+						"description": "手机号",
+						"example": "13800138002"
+					},
+					"username": {
+						"type": "string",
+						"description": "用户名，可为空",
+						"example": "alpha-admin"
+					},
+					"realName": {
+						"type": "string",
+						"description": "真实姓名",
+						"example": "张审核"
+					},
+					"role": {
+						"type": "string",
+						"description": "角色枚举，枚举值：EMPLOYEE员工、MANAGER部门经理、ENGINEER总工程师",
+						"enum": [
+							"EMPLOYEE",
+							"MANAGER",
+							"ENGINEER"
+						],
+						"example": "EMPLOYEE"
+					},
+					"position": {
+						"type": "string",
+						"description": "岗位枚举，枚举值：ANNOTATOR标注员、DATA_TRAINER数据训练师、REVIEWER审核员、ADMIN公司管理员、SUPER_ADMIN超级管理员",
+						"enum": [
+							"ANNOTATOR",
+							"DATA_TRAINER",
+							"REVIEWER",
+							"ADMIN",
+							"SUPER_ADMIN"
+						],
+						"example": "REVIEWER"
+					},
+					"mustChangePassword": {
+						"type": "boolean",
+						"description": "是否必须修改密码",
+						"example": false
+					}
+				},
+				"description": "当前登录用户响应",
+				"example": {}
+			},
+			"ResultCurrentUserResponse": {
+				"type": "object",
+				"properties": {
+					"code": {
+						"type": "integer",
+						"description": "业务状态码",
+						"format": "int32",
+						"example": 0
+					},
+					"message": {
+						"type": "string",
+						"description": "返回消息",
+						"example": "success"
+					},
+					"data": {
+						"$ref": "#/components/schemas/CurrentUserResponse"
+					}
+				},
+				"description": "统一返回结果"
+			},
+			"ResultListCompanyOptionResponse": {
+				"type": "object",
+				"properties": {
+					"code": {
+						"type": "integer",
+						"description": "业务状态码",
+						"format": "int32",
+						"example": 0
+					},
+					"message": {
+						"type": "string",
+						"description": "返回消息",
+						"example": "success"
+					},
+					"data": {
+						"type": "array",
+						"description": "返回数据",
+						"items": {
+							"$ref": "#/components/schemas/CompanyOptionResponse"
+						},
+						"example": {}
+					}
+				},
+				"description": "统一返回结果"
+			},
+			"SaveSysConfigRequest": {
+				"required": [
+					"configName",
+					"configType",
+					"configValue"
+				],
+				"type": "object",
+				"properties": {
+					"configType": {
+						"type": "string",
+						"description": "配置类型",
+						"example": "MODEL"
+					},
+					"configName": {
+						"type": "string",
+						"description": "配置名称",
+						"example": "qwen-plus-extract"
+					},
+					"configValue": {
+						"type": "string",
+						"description": "配置值",
+						"example": "{\"modelName\":\"qwen-plus\",\"modelUrl\":\"https://dashscope.aliyuncs.com/compatible-mode/v1\",\"apiKey\":\"sk-demo1234\"}"
+					},
+					"status": {
+						"type": "string",
+						"description": "配置状态",
+						"example": "ENABLED"
+					}
+				},
+				"description": "保存系统配置请求"
+			},
+			"ResultSysConfigResponse": {
+				"type": "object",
+				"properties": {
+					"code": {
+						"type": "integer",
+						"description": "业务状态码",
+						"format": "int32",
+						"example": 0
+					},
+					"message": {
+						"type": "string",
+						"description": "返回消息",
+						"example": "success"
+					},
+					"data": {
+						"$ref": "#/components/schemas/SysConfigResponse"
+					}
+				},
+				"description": "统一返回结果"
+			},
+			"SysConfigResponse": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "integer",
+						"description": "配置ID",
+						"format": "int64",
+						"example": 191000000000000500
+					},
+					"configType": {
+						"type": "string",
+						"description": "配置类型",
+						"example": "MODEL"
+					},
+					"configName": {
+						"type": "string",
+						"description": "配置名称",
+						"example": "qwen-plus-extract"
+					},
+					"configValue": {
+						"type": "string",
+						"description": "配置值",
+						"example": "{\"modelName\":\"qwen-plus\",\"modelUrl\":\"https://dashscope.aliyuncs.com/compatible-mode/v1\",\"apiKey\":\"sk-demo1234\"}"
+					},
+					"status": {
+						"type": "string",
+						"description": "配置状态",
+						"example": "ENABLED"
+					},
+					"creatorId": {
+						"type": "integer",
+						"description": "创建人ID",
+						"format": "int64",
+						"example": 191000000000000030
+					},
+					"createdAt": {
+						"type": "string",
+						"description": "创建时间",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"description": "更新时间",
+						"format": "date-time"
+					}
+				},
+				"description": "系统配置响应",
+				"example": {}
+			},
+			"UpdateAnnotationTaskRequest": {
+				"type": "object",
+				"properties": {
+					"industryType": {
+						"type": "string",
+						"description": "行业类型，枚举值：TRANSPORT:交通、ELECTRICITY：电力、FINANCE:金融、MEDICAL:医疗、EDUCATION:教育",
+						"enum": [
+							"TRANSPORT",
+							"ELECTRICITY",
+							"FINANCE",
+							"MEDICAL",
+							"EDUCATION"
+						],
+						"example": "TRANSPORT"
+					},
+					"taskType": {
+						"type": "string",
+						"description": "标注任务类型枚举值：EXTRACT_QA:抽取任务、FINE_TUNE:微调任务",
+						"enum": [
+							"EXTRACT_QA",
+							"FINE_TUNE"
+						],
+						"example": "EXTRACT_QA"
+					},
+					"resourceIds": {
+						"type": "array",
+						"description": "资源ID列表",
+						"items": {
+							"type": "integer",
+							"description": "资源ID列表",
+							"format": "int64"
+						},
+						"example": [
+							191000000000000100,
+							191000000000000100
+						]
+					}
+				},
+				"description": "更新标注任务请求"
+			},
+			"AnnotationTaskResponse": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "integer",
+						"description": "任务ID",
+						"format": "int64",
+						"example": 191000000000000300
+					},
+					"taskName": {
+						"type": "string",
+						"description": "任务名称",
+						"example": "运输文档问答抽取任务"
+					},
+					"industryType": {
+						"type": "string",
+						"description": "行业类型，枚举值：TRANSPORT:交通、ELECTRICITY：电力、FINANCE:金融、MEDICAL:医疗、EDUCATION:教育",
+						"enum": [
+							"TRANSPORT",
+							"ELECTRICITY",
+							"FINANCE",
+							"MEDICAL",
+							"EDUCATION"
+						],
+						"example": "transport"
+					},
+					"taskType": {
+						"type": "string",
+						"description": "标注任务类型枚举值：EXTRACT_QA:抽取任务、FINE_TUNE:微调任务",
+						"enum": [
+							"EXTRACT_QA",
+							"FINE_TUNE"
+						],
+						"example": "EXTRACT_QA"
+					},
+					"taskStatus": {
+						"type": "string",
+						"description": "任务状态",
+						"example": "PENDING"
+					},
+					"resourceIds": {
+						"type": "array",
+						"description": "资源ID列表",
+						"items": {
+							"type": "integer",
+							"description": "资源ID列表",
+							"format": "int64"
+						},
+						"example": [
+							191000000000000100,
+							191000000000000100
+						]
+					},
+					"createdAt": {
+						"type": "string",
+						"description": "创建时间",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"description": "更新时间",
+						"format": "date-time"
+					}
+				},
+				"description": "标注任务响应",
+				"example": {}
+			},
+			"ResultAnnotationTaskResponse": {
+				"type": "object",
+				"properties": {
+					"code": {
+						"type": "integer",
+						"description": "业务状态码",
+						"format": "int32",
+						"example": 0
+					},
+					"message": {
+						"type": "string",
+						"description": "返回消息",
+						"example": "success"
+					},
+					"data": {
+						"$ref": "#/components/schemas/AnnotationTaskResponse"
+					}
+				},
+				"description": "统一返回结果"
+			},
+			"ResultSourceUploadResponse": {
+				"type": "object",
+				"properties": {
+					"code": {
+						"type": "integer",
+						"description": "业务状态码",
+						"format": "int32",
+						"example": 0
+					},
+					"message": {
+						"type": "string",
+						"description": "返回消息",
+						"example": "success"
+					},
+					"data": {
+						"$ref": "#/components/schemas/SourceUploadResponse"
+					}
+				},
+				"description": "统一返回结果"
+			},
+			"SourceUploadResponse": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "integer",
+						"description": "资源ID",
+						"format": "int64",
+						"example": 191000000000000100
+					},
+					"resourceName": {
+						"type": "string",
+						"description": "资源名称",
+						"example": "2026年4月运输巡检记录"
+					},
+					"resourceType": {
+						"type": "string",
+						"description": "资源类型",
+						"example": "TEXT"
+					},
+					"bucketName": {
+						"type": "string",
+						"description": "桶名称",
+						"example": "annotation-source"
+					},
+					"filePath": {
+						"type": "string",
+						"description": "文件路径",
+						"example": "company/191000000000000001/text/191000000000000101.txt"
+					},
+					"fileSize": {
+						"type": "integer",
+						"description": "文件大小",
+						"format": "int64",
+						"example": 20480
+					},
+					"sourceStatus": {
+						"type": "string",
+						"description": "资源状态",
+						"example": "READY"
+					},
+					"createdAt": {
+						"type": "string",
+						"description": "创建时间",
+						"format": "date-time"
+					}
+				},
+				"description": "资源上传响应",
+				"example": {}
+			},
+			"CreateSystemEngineerAdminRequest": {
+				"required": [
+					"phone",
+					"realName"
+				],
+				"type": "object",
+				"properties": {
+					"phone": {
+						"type": "string",
+						"description": "手机号",
+						"example": "13800138002"
+					},
+					"username": {
+						"type": "string",
+						"description": "用户名，前端展示用，可为空",
+						"example": "system-engineer"
+					},
+					"realName": {
+						"type": "string",
+						"description": "真实姓名",
+						"example": "系统工程师"
+					}
+				},
+				"description": "创建系统工程师管理员请求"
+			},
+			"CreateAnnotationTaskRequest": {
+				"required": [
+					"industryType",
+					"resourceIds",
+					"taskName",
+					"taskType"
+				],
+				"type": "object",
+				"properties": {
+					"taskName": {
+						"type": "string",
+						"description": "任务名称",
+						"example": "运输文档问答抽取任务"
+					},
+					"industryType": {
+						"type": "string",
+						"description": "行业类型，枚举值：TRANSPORT:交通、ELECTRICITY：电力、FINANCE:金融、MEDICAL:医疗、EDUCATION:教育",
+						"default": "TRANSPORT",
+						"enum": [
+							"TRANSPORT",
+							"ELECTRICITY",
+							"FINANCE",
+							"MEDICAL",
+							"EDUCATION"
+						],
+						"example": "TRANSPORT"
+					},
+					"taskType": {
+						"type": "string",
+						"description": "标注任务类型枚举值：EXTRACT_QA:抽取任务、FINE_TUNE:微调任务",
+						"default": "EXTRACT_QA",
+						"enum": [
+							"EXTRACT_QA",
+							"FINE_TUNE"
+						],
+						"example": "EXTRACT_QA"
+					},
+					"resourceIds": {
+						"type": "array",
+						"description": "资源ID列表",
+						"items": {
+							"type": "integer",
+							"description": "资源ID列表",
+							"format": "int64"
+						},
+						"example": [
+							191000000000000100,
+							191000000000000100
+						]
+					}
+				},
+				"description": "创建标注任务请求"
+			},
+			"MergeReviewResultRequest": {
+				"type": "object",
+				"properties": {
+					"mergedAnswers": {
+						"type": "object",
+						"additionalProperties": {
+							"type": "string",
+							"description": "合并后的答案映射，key为qa记录ID，value为合并后的答案"
+						},
+						"description": "合并后的答案映射，key为qa记录ID，value为合并后的答案",
+						"properties": {}
+					},
+					"reviewComment": {
+						"type": "string",
+						"description": "审核备注"
+					}
+				},
+				"description": "合并审核结果请求"
+			},
+			"PageResultSysConfigResponse": {
+				"type": "object",
+				"properties": {
+					"records": {
+						"type": "array",
+						"description": "当前页记录",
+						"items": {
+							"$ref": "#/components/schemas/SysConfigResponse"
+						},
+						"example": []
+					},
+					"total": {
+						"type": "integer",
+						"description": "总记录数",
+						"format": "int64",
+						"example": 2
+					},
+					"pageNo": {
+						"type": "integer",
+						"description": "页码",
+						"format": "int32",
+						"example": 1
+					},
+					"pageSize": {
+						"type": "integer",
+						"description": "每页数量",
+						"format": "int32",
+						"example": 10
+					}
+				},
+				"description": "分页结果",
+				"example": {}
+			},
+			"ResultPageResultSysConfigResponse": {
+				"type": "object",
+				"properties": {
+					"code": {
+						"type": "integer",
+						"description": "业务状态码",
+						"format": "int32",
+						"example": 0
+					},
+					"message": {
+						"type": "string",
+						"description": "返回消息",
+						"example": "success"
+					},
+					"data": {
+						"$ref": "#/components/schemas/PageResultSysConfigResponse"
+					}
+				},
+				"description": "统一返回结果"
+			},
+			"PageResultSourceResourceResponse": {
+				"type": "object",
+				"properties": {
+					"records": {
+						"type": "array",
+						"description": "当前页记录",
+						"items": {
+							"$ref": "#/components/schemas/SourceResourceResponse"
+						},
+						"example": []
+					},
+					"total": {
+						"type": "integer",
+						"description": "总记录数",
+						"format": "int64",
+						"example": 2
+					},
+					"pageNo": {
+						"type": "integer",
+						"description": "页码",
+						"format": "int32",
+						"example": 1
+					},
+					"pageSize": {
+						"type": "integer",
+						"description": "每页数量",
+						"format": "int32",
+						"example": 10
+					}
+				},
+				"description": "分页结果",
+				"example": {}
+			},
+			"ResultPageResultSourceResourceResponse": {
+				"type": "object",
+				"properties": {
+					"code": {
+						"type": "integer",
+						"description": "业务状态码",
+						"format": "int32",
+						"example": 0
+					},
+					"message": {
+						"type": "string",
+						"description": "返回消息",
+						"example": "success"
+					},
+					"data": {
+						"$ref": "#/components/schemas/PageResultSourceResourceResponse"
+					}
+				},
+				"description": "统一返回结果"
+			},
+			"SourceResourceResponse": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "integer",
+						"description": "资源ID",
+						"format": "int64",
+						"example": 191000000000000100
+					},
+					"resourceName": {
+						"type": "string",
+						"description": "资源名称",
+						"example": "2026年4月运输巡检记录"
+					},
+					"resourceType": {
+						"type": "string",
+						"description": "资源类型",
+						"example": "TEXT"
+					},
+					"bucketName": {
+						"type": "string",
+						"description": "桶名称",
+						"example": "annotation-source"
+					},
+					"filePath": {
+						"type": "string",
+						"description": "文件路径",
+						"example": "company/191000000000000001/text/191000000000000101.txt"
+					},
+					"fileSize": {
+						"type": "integer",
+						"description": "文件大小",
+						"format": "int64",
+						"example": 20480
+					},
+					"sourceStatus": {
+						"type": "string",
+						"description": "资源状态",
+						"example": "READY"
+					},
+					"storageProvider": {
+						"type": "string",
+						"description": "存储提供方",
+						"example": "rustfs"
+					},
+					"hasBbox": {
+						"type": "boolean",
+						"description": "是否有BBOX标注,不显示",
+						"example": false
+					},
+					"remark": {
+						"type": "string",
+						"description": "备注",
+						"example": "第一批导入样本"
+					},
+					"creatorName": {
+						"type": "string",
+						"description": "创建人名称",
+						"example": "张审核"
+					},
+					"createdAt": {
+						"type": "string",
+						"description": "创建时间",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"description": "更新时间",
+						"format": "date-time"
+					}
+				},
+				"description": "资源响应",
+				"example": []
+			},
+			"ResultSourceResourceResponse": {
+				"type": "object",
+				"properties": {
+					"code": {
+						"type": "integer",
+						"description": "业务状态码",
+						"format": "int32",
+						"example": 0
+					},
+					"message": {
+						"type": "string",
+						"description": "返回消息",
+						"example": "success"
+					},
+					"data": {
+						"$ref": "#/components/schemas/SourceResourceResponse"
+					}
+				},
+				"description": "统一返回结果"
+			},
+			"PageResultAnnotationTaskResponse": {
+				"type": "object",
+				"properties": {
+					"records": {
+						"type": "array",
+						"description": "当前页记录",
+						"items": {
+							"$ref": "#/components/schemas/AnnotationTaskResponse"
+						},
+						"example": []
+					},
+					"total": {
+						"type": "integer",
+						"description": "总记录数",
+						"format": "int64",
+						"example": 2
+					},
+					"pageNo": {
+						"type": "integer",
+						"description": "页码",
+						"format": "int32",
+						"example": 1
+					},
+					"pageSize": {
+						"type": "integer",
+						"description": "每页数量",
+						"format": "int32",
+						"example": 10
+					}
+				},
+				"description": "分页结果",
+				"example": {}
+			},
+			"ResultPageResultAnnotationTaskResponse": {
+				"type": "object",
+				"properties": {
+					"code": {
+						"type": "integer",
+						"description": "业务状态码",
+						"format": "int32",
+						"example": 0
+					},
+					"message": {
+						"type": "string",
+						"description": "返回消息",
+						"example": "success"
+					},
+					"data": {
+						"$ref": "#/components/schemas/PageResultAnnotationTaskResponse"
+					}
+				},
+				"description": "统一返回结果"
+			},
+			"AnnotationResultResponse": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "integer",
+						"description": "结果ID",
+						"format": "int64",
+						"example": 191000000000000420
+					},
+					"taskId": {
+						"type": "integer",
+						"description": "任务ID",
+						"format": "int64",
+						"example": 191000000000000300
+					},
+					"taskName": {
+						"type": "string",
+						"description": "任务名称",
+						"example": "产品说明书标注"
+					},
+					"resourceId": {
+						"type": "integer",
+						"description": "资源ID",
+						"format": "int64",
+						"example": 191000000000000100
+					},
+					"resourceName": {
+						"type": "string",
+						"description": "资源名称",
+						"example": "产品A说明书.pdf"
+					},
+					"runtimeStatus": {
+						"type": "string",
+						"description": "标注结果状态枚举值：MANUAL_REVIEW_PENDING待人工审核、MANUAL_REVIEW_PENDING待自动归档、ARCHIVED已归档",
+						"enum": [
+							"MANUAL_REVIEW_PENDING",
+							"AUTO_ARCHIVE_PENDING",
+							"ARCHIVED"
+						],
+						"example": "MANUAL_REVIEW_PENDING"
+					},
+					"requiresManualReview": {
+						"type": "boolean",
+						"description": "是否需要人工审核",
+						"example": true
+					},
+					"isDeleted": {
+						"type": "boolean",
+						"description": "是否已删除",
+						"example": false
+					},
+					"qaContentFilePath": {
+						"type": "string",
+						"description": "问答内容文件路径",
+						"example": "annotation-results/2/qa/801.json"
+					},
+					"diffSummaryFilePath": {
+						"type": "string",
+						"description": "差异摘要文件路径",
+						"example": "annotation-results/2/diff/801.json"
+					},
+					"reviewComment": {
+						"type": "string",
+						"description": "审核备注",
+						"example": "需统一时间字段口径。"
+					},
+					"reviewedAt": {
+						"type": "string",
+						"description": "审核时间",
+						"format": "date-time"
+					},
+					"createdAt": {
+						"type": "string",
+						"description": "创建时间",
+						"format": "date-time"
+					}
+				},
+				"description": "标注结果响应",
+				"example": []
+			},
+			"PageResultAnnotationResultResponse": {
+				"type": "object",
+				"properties": {
+					"records": {
+						"type": "array",
+						"description": "当前页记录",
+						"items": {
+							"$ref": "#/components/schemas/AnnotationResultResponse"
+						},
+						"example": []
+					},
+					"total": {
+						"type": "integer",
+						"description": "总记录数",
+						"format": "int64",
+						"example": 2
+					},
+					"pageNo": {
+						"type": "integer",
+						"description": "页码",
+						"format": "int32",
+						"example": 1
+					},
+					"pageSize": {
+						"type": "integer",
+						"description": "每页数量",
+						"format": "int32",
+						"example": 10
+					}
+				},
+				"description": "分页结果"
+			},
+			"AnnotationResultCompareResponse": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "integer",
+						"description": "结果ID",
+						"format": "int64",
+						"example": 191000000000000420
+					},
+					"taskId": {
+						"type": "integer",
+						"description": "任务ID",
+						"format": "int64",
+						"example": 191000000000000300
+					},
+					"resourceId": {
+						"type": "integer",
+						"description": "资源ID",
+						"format": "int64",
+						"example": 191000000000000100
+					},
+					"qaRecords": {
+						"type": "array",
+						"description": "问答对列表",
+						"items": {
+							"$ref": "#/components/schemas/QaRecord"
+						}
+					},
+					"diffRecords": {
+						"type": "array",
+						"description": "差异列表",
+						"items": {
+							"$ref": "#/components/schemas/DiffRecord"
+						}
+					},
+					"sourcePreviewPath": {
+						"type": "string",
+						"description": "资源预览路径",
+						"example": "preview/191000000000000101/index.html"
+					}
+				},
+				"description": "标注结果比对响应"
+			},
+			"UpdateSysConfigRequest": {
+				"required": [
+					"configValue"
+				],
+				"type": "object",
+				"properties": {
+					"configType": {
+						"type": "string",
+						"description": "配置类型",
+						"example": "MODEL"
+					},
+					"configName": {
+						"type": "string",
+						"description": "配置名称",
+						"example": "qwen-plus-extract"
+					},
+					"configValue": {
+						"type": "string",
+						"description": "配置值",
+						"example": "{\"modelName\":\"qwen-plus\",\"modelUrl\":\"https://dashscope.aliyuncs.com/compatible-mode/v1\",\"apiKey\":\"sk-demo1234\"}"
+					},
+					"status": {
+						"type": "string",
+						"description": "配置状态",
+						"example": "ENABLED"
+					}
+				},
+				"description": "更新系统配置请求"
+			},
+			"BboxCoordinate": {
+				"required": [
+					"height",
+					"width",
+					"x",
+					"y"
+				],
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"description": "BBOX标识",
+						"example": "bbox_001"
+					},
+					"x": {
+						"type": "integer",
+						"description": "左上角X坐标",
+						"format": "int32",
+						"example": 100
+					},
+					"y": {
+						"type": "integer",
+						"description": "左上角Y坐标",
+						"format": "int32",
+						"example": 50
+					},
+					"width": {
+						"type": "integer",
+						"description": "宽度",
+						"format": "int32",
+						"example": 200
+					},
+					"height": {
+						"type": "integer",
+						"description": "高度",
+						"format": "int32",
+						"example": 150
+					},
+					"label": {
+						"type": "string",
+						"description": "标注标签",
+						"example": "车辆"
+					}
+				},
+				"description": "BBOX坐标对象"
+			},
+			"SaveImageBboxRequest": {
+				"required": [
+					"bboxes"
+				],
+				"type": "object",
+				"properties": {
+					"bboxes": {
+						"type": "array",
+						"description": "BBOX坐标列表",
+						"items": {
+							"$ref": "#/components/schemas/BboxCoordinate"
+						}
+					},
+					"remark": {
+						"type": "string",
+						"description": "备注"
+					}
+				},
+				"description": "保存图片BBOX请求"
+			},
+			"BboxCoordinateResponse": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"description": "BBOX标识",
+						"example": "bbox_001"
+					},
+					"x": {
+						"type": "integer",
+						"description": "左上角X坐标",
+						"format": "int32",
+						"example": 100
+					},
+					"y": {
+						"type": "integer",
+						"description": "左上角Y坐标",
+						"format": "int32",
+						"example": 50
+					},
+					"width": {
+						"type": "integer",
+						"description": "宽度",
+						"format": "int32",
+						"example": 200
+					},
+					"height": {
+						"type": "integer",
+						"description": "高度",
+						"format": "int32",
+						"example": 150
+					},
+					"label": {
+						"type": "string",
+						"description": "标注标签",
+						"example": "车辆"
+					}
+				},
+				"description": "BBOX坐标响应对象"
+			},
+			"ImageBboxResponse": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "integer",
+						"description": "bbox标识ID",
+						"format": "int64",
+						"example": 191000000000000100
+					},
+					"resourceId": {
+						"type": "integer",
+						"description": "资源ID",
+						"format": "int64",
+						"example": 191000000000000100
+					},
+					"bboxes": {
+						"type": "array",
+						"description": "BBOX坐标列表",
+						"items": {
+							"$ref": "#/components/schemas/BboxCoordinateResponse"
+						}
+					},
+					"remark": {
+						"type": "string",
+						"description": "备注",
+						"example": "车辆检测标注"
+					},
+					"creatorName": {
+						"type": "string",
+						"description": "创建人名称",
+						"example": "张审核"
+					},
+					"createdAt": {
+						"type": "string",
+						"description": "创建时间",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"description": "更新时间",
+						"format": "date-time"
+					}
+				},
+				"description": "图片BBOX响应",
+				"example": {}
+			},
+			"ResultImageBboxResponse": {
+				"type": "object",
+				"properties": {
+					"code": {
+						"type": "integer",
+						"description": "业务状态码",
+						"format": "int32",
+						"example": 0
+					},
+					"message": {
+						"type": "string",
+						"description": "返回消息",
+						"example": "success"
+					},
+					"data": {
+						"$ref": "#/components/schemas/ImageBboxResponse"
+					}
+				},
+				"description": "统一返回结果"
+			},
+			"DiffRecord": {
+				"type": "object",
+				"properties": {
+					"qaId": {
+						"type": "string",
+						"description": "关联的问答记录ID",
+						"example": "qa_001"
+					},
+					"question": {
+						"type": "string",
+						"description": "问题",
+						"example": "运输时效是多久？"
+					},
+					"extractAnswer": {
+						"type": "string",
+						"description": "提取模型答案",
+						"example": "3天"
+					},
+					"verifyAnswer": {
+						"type": "string",
+						"description": "校验模型答案",
+						"example": "72小时"
+					},
+					"diffReason": {
+						"type": "string",
+						"description": "差异原因",
+						"example": "时间单位不一致"
+					},
+					"mergedAnswer": {
+						"type": "string",
+						"description": "合并后的最终答案",
+						"example": "72小时（3天）"
+					}
+				},
+				"description": "差异记录"
+			},
+			"QaRecord": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"description": "记录ID",
+						"example": "qa_001"
+					},
+					"question": {
+						"type": "string",
+						"description": "问题",
+						"example": "运输时效是多久？"
+					},
+					"answer": {
+						"type": "string",
+						"description": "答案",
+						"example": "3天"
+					},
+					"requiresReview": {
+						"type": "boolean",
+						"description": "是否需要审核",
+						"example": true
+					}
+				},
+				"description": "问答记录"
+			},
+			"AnnotationResultHistoryResponse": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "integer",
+						"description": "历史记录ID, 不显示",
+						"format": "int64",
+						"example": 901
+					},
+					"taskId": {
+						"type": "integer",
+						"description": "任务ID",
+						"format": "int64",
+						"example": 191000000000000300
+					},
+					"taskName": {
+						"type": "string",
+						"description": "任务名称",
+						"example": "产品说明书标注"
+					},
+					"resourceId": {
+						"type": "integer",
+						"description": "资源ID",
+						"format": "int64",
+						"example": 191000000000000100
+					},
+					"resourceName": {
+						"type": "string",
+						"description": "资源名称",
+						"example": "产品A说明书.pdf"
+					},
+					"qaContentFilePath": {
+						"type": "string",
+						"description": "问答内容文件路径",
+						"example": "annotation-results/2/qa/802.json"
+					},
+					"archiveReason": {
+						"type": "string",
+						"description": "归档原因",
+						"example": "审核通过后归档"
+					},
+					"archivedBy": {
+						"type": "integer",
+						"description": "归档操作人ID",
+						"format": "int64",
+						"example": 5
+					},
+					"archivedAt": {
+						"type": "string",
+						"description": "归档时间",
+						"format": "date-time"
+					},
+					"createdAt": {
+						"type": "string",
+						"description": "创建时间",
+						"format": "date-time"
+					},
+					"reviewerId": {
+						"type": "integer",
+						"description": "审核人ID，自动归档时为null",
+						"format": "int64",
+						"example": 5
+					},
+					"reviewerName": {
+						"type": "string",
+						"description": "审核人姓名，自动归档时为auto",
+						"example": "张三"
+					},
+					"reviewerComment": {
+						"type": "string",
+						"description": "审核意见，自动归档时为auto",
+						"example": "内容符合要求"
+					}
+				},
+				"description": "归档历史响应",
+				"example": []
+			},
+			"PageResultAnnotationResultHistoryResponse": {
+				"type": "object",
+				"properties": {
+					"records": {
+						"type": "array",
+						"description": "当前页记录",
+						"items": {
+							"$ref": "#/components/schemas/AnnotationResultHistoryResponse"
+						},
+						"example": []
+					},
+					"total": {
+						"type": "integer",
+						"description": "总记录数",
+						"format": "int64",
+						"example": 2
+					},
+					"pageNo": {
+						"type": "integer",
+						"description": "页码",
+						"format": "int32",
+						"example": 1
+					},
+					"pageSize": {
+						"type": "integer",
+						"description": "每页数量",
+						"format": "int32",
+						"example": 10
+					}
+				},
+				"description": "分页结果"
+			},
+			"FileContentResponse": {
+				"type": "object",
+				"properties": {
+					"filePath": {
+						"type": "string",
+						"description": "文件路径",
+						"example": "annotation-results/2/qa/801.json"
+					},
+					"content": {
+						"type": "string",
+						"description": "文件内容"
+					},
+					"size": {
+						"type": "integer",
+						"description": "文件大小（字节）",
+						"format": "int32",
+						"example": 1024
+					}
+				},
+				"description": "文件内容响应"
+			}
+		},
+		"responses": {},
+		"securitySchemes": {}
+	},
+	"servers": [],
+	"security": []
+}
